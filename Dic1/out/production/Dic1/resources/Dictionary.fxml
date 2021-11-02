@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dictionary.controller">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Info">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox spacing="10.0">
+               <children>
+                  <TextField fx:id="myTextField" promptText="Enter your word..." />
+                  <TextField fx:id="meaning" promptText="Enter your meaning..." />
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#dictionaryLookup" text="Search" />
+                  <Button fx:id="displayAllButton" mnemonicParsing="false" onAction="#displayAll" text="Display all" />
+                  <Button fx:id="Add" layoutX="479.0" layoutY="10.0" mnemonicParsing="false" onAction="#addAWord" text="Add" />
+                  <Button fx:id="delete" layoutX="576.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteAWord" text="Delete" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <left>
+      <ListView fx:id="listView" prefHeight="364.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <Label fx:id="result" alignment="TOP_LEFT" prefHeight="525.0" prefWidth="467.0" BorderPane.alignment="CENTER">
+         <effect>
+            <Glow />
+         </effect>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></Label>
+   </center>
+</BorderPane>

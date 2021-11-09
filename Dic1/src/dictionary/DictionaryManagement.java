@@ -24,6 +24,7 @@ public class DictionaryManagement {
 
     public void insertFromFile() throws Exception {
         //setProperty("file.encoding", "utf-8");
+        int dem = 0;
         InputStream is = DictionaryManagement.class.getResourceAsStream("/dictionary.txt");
         InputStreamReader isr = new InputStreamReader(is, "utf8");
         File file = new File("C:/Users/darka/IdeaProjects/Dic1/src/resources/dictionary.txt");
@@ -44,8 +45,15 @@ public class DictionaryManagement {
             //System.out.println(new_word + '\n' + new_explain);
 
             words.add(new_word);
+            if(dictionary.containsKey(new_word))
+            {
+                dictionary.replace(new_word, new_explain);
+                continue;
+            }
             dictionary.put(new_word, new_explain);
+            dem++;
         }
+        System.out.println(dem);
         bf.close();
         isr.close();
         is.close();

@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -13,10 +15,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class controller implements Initializable {
+    File f = new File("C:\\Users\\darka\\IdeaProjects\\Dic1\\src\\resources\\dictionary.txt");
     DictionaryManagement dic = new DictionaryManagement();
     HashMap<String, String> controllerHashmap = dic.dictionary;
     ArrayList<String> words = dic.words;
     ArrayList<String> searched = new ArrayList<>();
+    ArrayList<String> deleted = new ArrayList<>();
     String s = "";
     @FXML
     private TextField myTextField;
@@ -48,11 +52,6 @@ public class controller implements Initializable {
 
     public void dictionaryLookup(javafx.event.ActionEvent actionEvent) {
         s = myTextField.getText();
-        /*for (Map.Entry<String, String> word : controllerHashmap.entrySet()) {
-            if (word.getKey().startsWith(s)) {
-                if (word.getKey().equals(s)) result.setText(word.getKey() + "\n" + word.getValue());
-            }
-        }*/
         listView.getItems().clear();
         listView.getItems().addAll(searchList(myTextField.getText(), words));
     }
@@ -70,6 +69,11 @@ public class controller implements Initializable {
         if (searched.size() != 0) {
             controllerHashmap.put(searched.get(searched.size() - 1), "Word deleted!");
             result.setText(s + "\n\n" + "Word deleted!");
+            try {
+                write("\n@" + s + "\n" + "Word deleted!" + "\n", f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -85,6 +89,12 @@ public class controller implements Initializable {
 
     public void about(javafx.event.ActionEvent actionEvent) {
         result.setText("\n\n\n\n\n\nThis dictionary was created by Phan Duy Thang!\n\nhttps://github.com/darkarchorn/Dictionary");
+    }
+
+    public void write(String s, File f) throws IOException {
+        FileWriter fw = new FileWriter(f, true);
+        fw.write(s);
+        fw.close();
     }
 
     @Override

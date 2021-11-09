@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -20,7 +18,6 @@ public class controller implements Initializable {
     HashMap<String, String> controllerHashmap = dic.dictionary;
     ArrayList<String> words = dic.words;
     ArrayList<String> searched = new ArrayList<>();
-    ArrayList<String> deleted = new ArrayList<>();
     String s = "";
     @FXML
     private TextField myTextField;
@@ -54,6 +51,11 @@ public class controller implements Initializable {
         s = myTextField.getText();
         listView.getItems().clear();
         listView.getItems().addAll(searchList(myTextField.getText(), words));
+        myTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            listView.getItems().clear();
+            listView.getItems().addAll(searchList(myTextField.getText(), words));
+            //Call search and update list
+        });
     }
 
     public void displayAll(javafx.event.ActionEvent actionEvent) throws FileNotFoundException {
@@ -62,15 +64,15 @@ public class controller implements Initializable {
         while (scan.hasNextLine()) {
             System.out.println(scan.nextLine());
         }
-        result.setText("All the words have been displayed on your console!");
+        result.setText("- All the words have been displayed on your console!");
     }
 
     public void deleteAWord(javafx.event.ActionEvent actionEvent) {
         if (searched.size() != 0) {
-            controllerHashmap.put(searched.get(searched.size() - 1), "Word deleted!");
-            result.setText(s + "\n\n" + "Word deleted!");
+            controllerHashmap.put(searched.get(searched.size() - 1), "- Word deleted!");
+            result.setText(s + "\n\n" + "- Word deleted!");
             try {
-                write("\n@" + s + "\n" + "Word deleted!" + "\n", f);
+                write("\n@" + s + "\n" + "- Word deleted!" + "\n", f);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -78,13 +80,22 @@ public class controller implements Initializable {
     }
 
     public void addAWord(javafx.event.ActionEvent actionEvent) {
-        words.add(myTextField.getText() + "  ");
+        /*words.add(myTextField.getText() + "  ");
         if (meaning.getText().equals("")) {
             controllerHashmap.put(myTextField.getText() + "  ", "* " + "Meaning undetermined!");
         } else {
             controllerHashmap.put(myTextField.getText() + "  ", "* " + meaning.getText());
         }
-        result.setText(myTextField.getText() + "\n\n" + "Word added!");
+        result.setText(myTextField.getText() + "\n\n" + "Word added!");*/
+        result.setText(s + "\n\nWord added");
+        s=myTextField.getText();
+        try {
+            write("\n@" + s + "\n- " + meaning.getText() + "\n", f);
+            controllerHashmap.put(s, "- " + meaning.getText());
+            words.add(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void about(javafx.event.ActionEvent actionEvent) {
